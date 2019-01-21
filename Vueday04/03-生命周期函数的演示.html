@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>生命周期函数的演示</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="修改msg" @click="msg='No'">
+        <h3 id="h3">{{msg}}</h3>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+            msg:'Ok',
+            
+            },
+            methods:{
+            show(){
+            console.log('helloworld!');
+                },
+            beforeCreate() {
+                /* 这是我们遇到的第一个生命周期函数,表示Vue实例被创建之前会执行它,此时data和methods中的数据还没初始化 */
+            },
+            created() {
+                /* 此时data和methods中的数据已经初始化完成,如果要操作data中的数据和methods中的方法,最早要在created函数中操作 */
+            },
+            beforeMount() {
+                /* 模板已经编辑完成,但是还没有渲染到页面中去 */
+            },
+            mounted() {
+                /* 此时模板编辑完成并且渲染到页面中去了,用户可以看到渲染好的页面了
+                注意:mounted函数是实例创建期间最后一个钩子函数,当执行完后,实例就已经被完全创建好了,如果没有其他的操作,实例就静静的躺着
+                一动也不动 */
+            },
+            beforeUpdate() {
+                /* 此时页面中显示的数据还没有更新还是旧的,但是data中数据已经更新,页面尚未和最新的data数据同步 */
+            },
+            updated() {
+                /* 此时页面和data数据同步最新 */
+            },
+            }
+        })
+    
+    
+    
+    
+    </script>
+</body>
+</html>

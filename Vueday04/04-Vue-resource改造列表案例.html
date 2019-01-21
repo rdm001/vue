@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-resource改造列表案例</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+
+                <label>
+                     Name:
+                    <input type="text" v-model="name" class="form-control">
+                </label>
+
+                <input type="button" value="添加" @click="add" class="btn btn-primary">
+            </div>
+        </div>
+
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td>
+                        <a href="" @click.prevent="del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        /* 全局配置请求数据接口的根域名,则在每次单独发起http请求时,请求的url路径应该以相对路径开头,前面不能带/,否则不会
+        启用根路径做拼接 */
+        Vue.http.options.root = 'http://vue.lovegf.cn:8899/api/';
+        Vue.http.options.emulateJSON = true;
+
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+            name:'',
+            list:[]
+            },
+            created(){
+                this.getAllList()
+            },
+            methods:{
+                getAllList(){
+                    this.$http.get('getprodlist')
+                    .then(result=>{
+                        this.list = result.body.message
+                    })
+                },
+                add(){
+                    this.$http.post('addproduct',{name:this.name},{emulateJSON:true})
+                    .then(result=>{
+                        this.getAllList()
+                    })
+                },
+                del(id){
+                    this.$http.get('delproduct/'+ id)
+                    .then(result=>{
+                        this.getAllList()
+                    })
+                }
+            }
+        })
+    
+    
+    
+    
+    
+    
+    
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mycom2></mycom2>
+    </div>
+    <template id="tmpl">
+        <div>
+           <ul>
+               <li>我</li>
+               <li>很</li>
+               <li>帅</li>
+               <li>吗</li>
+           </ul>
+        </div>
+    </template>
+    <script>
+        Vue.component('mycom2',{
+            template:'#tmpl'
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+            msg:'',
+            
+            }
+        })
+    
+    
+    
+    </script>
+    
+</body>
+</html>
